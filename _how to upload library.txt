@@ -1,0 +1,2 @@
+1. run: pip install libA libB libC -t ./package
+2. put file lambda_function.py INSIDE package folder, zip all and upload
