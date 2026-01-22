@@ -1,4 +1,3 @@
-
 # require library: pip install google-auth google-auth-oauthlib google-api-python-client -t ./package
 # filename: lambda_function.py
 
@@ -16,24 +15,27 @@ from googleapiclient.discovery import build
 # 1. in google play console, change something about list IAP, like change desc of a particular product
 # 2. wait for some minutes
 
-def validateGooglePlayReceipt(packageName, productId, purchaseToken, isSubscription, serviceAccountFile):
-    
-    SCOPES = ['https://www.googleapis.com/auth/androidpublisher']
-    credentials = service_account.Credentials.from_service_account_file(serviceAccountFile, scopes=SCOPES)
-    service = build('androidpublisher', 'v3', credentials=credentials)
+def logDebug(isDebug, msg):
+    if isDebug:
+        print(msg)
 
+def validateGooglePlayReceipt(packageName, productId, purchaseToken, isSubscription, serviceAccountFile, isDebug):
     try:
+        SCOPES = ['https://www.googleapis.com/auth/androidpublisher']
+        credentials = service_account.Credentials.from_service_account_file(serviceAccountFile, scopes=SCOPES)
+        service = build('androidpublisher', 'v3', credentials=credentials)
+
         if isSubscription:
-            return validateGooglePlayReceipt_subscription(service, packageName, productId, purchaseToken)
+            return validateGooglePlayReceipt_subscription(service, packageName, productId, purchaseToken, isDebug)
         else:
-            return validateGooglePlayReceipt_consumable(service, packageName, productId, purchaseToken)
+            return validateGooglePlayReceipt_consumable(service, packageName, productId, purchaseToken, isDebug)
     except Exception as e:
         #watch out for throttling exception
-
-        errorMsg = e.reason
+        errorMsg = str(e)
+        logDebug(isDebug, "Exception when validating google play receipt: " + errorMsg)
         return False
     
-def validateGooglePlayReceipt_subscription(service, packageName, productId, purchaseToken):
+def validateGooglePlayReceipt_subscription(service, packageName, productId, purchaseToken, isDebug):
     result = service.purchases().subscriptions().get(
         packageName=packageName,
         subscriptionId=productId,
@@ -51,11 +53,13 @@ def validateGooglePlayReceipt_subscription(service, packageName, productId, purc
     else:
         return False
 
-def validateGooglePlayReceipt_consumable(service, packageName, productId, purchaseToken):
+def validateGooglePlayReceipt_consumable(service, packageName, productId, purchaseToken, isDebug):
     result = service.purchases().products().get(
         packageName=packageName,
         productId=productId,
         token=purchaseToken).execute()
+    
+    logDebug(isDebug, f"Response from Google Play: {result}")
             
     # 0. Purchased 1. Canceled 2. Pending
     purchaseState = result['purchaseState']
@@ -87,7 +91,7 @@ def lambda_handler(event, context):
     packageName = os.environ.get('package_name')
     serviceAccountFile = "service_account.json"
 
-    isValid = validateGooglePlayReceipt(packageName, productId, purchaseToken, isSubscription, serviceAccountFile)
+    isValid = validateGooglePlayReceipt(packageName, productId, purchaseToken, isSubscription, serviceAccountFile, False)
 
     return {
         'statusCode': 200,
@@ -96,7 +100,7 @@ def lambda_handler(event, context):
 
 #--------------------------- testing -----------------------------    
 
-token = "hpkbbhhpojcjeodeloncmpck.AO-J1OzNsy_gTRI7xEykFgi7IxFbBg7hAYyfgxfyVynf79NnBU82xS1ITjd5BmdQRBEekxSX3LHKirDkGg7cbyU70GJupADcI2DZirH0uP9Zydj-Sf5rGnk"
-serviceAccountFile = 'D:/test/idyllic-anvil-463906-m6-b216df26d27e.json'
-result = validateGooglePlayReceipt("com.nguyenhoainam.TestIAP", "com.nguyenhoainam.testiap.gem1", token, False, serviceAccountFile)
+token = "kgdmilkldhihkkeklkfechhe.AO-J1OwMDEHnIp5y-Mv9xgWyr6DN65wxO5SUWUKwcCgiBJIp134oYy8evjHzLZ3xzeyW4P78TXX1pnz_fCij4vd98ds_RS38Ug"
+serviceAccountFile = 'D:/merge-cat-town-49d98-0d0703482d92.json'
+result = validateGooglePlayReceipt("com.mobirix.mgct", "shop_gem_0002", token, False, serviceAccountFile, True)
 print(result)
