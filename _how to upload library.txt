@@ -1,2 +1,16 @@
 1. run: pip install libA libB libC -t ./package
 2. put file lambda_function.py INSIDE package folder, zip all and upload
+
+3. IMPORTANT: nếu gặp lỗi
+"Unable to import module 'lambda_function': cannot import name 'exceptions' from 'cryptography.hazmat.bindings._rust' (unknown location)"
+nghĩa là đang dùng một thư viện nào đó (ví dụ cryptography) mà nó phụ thuộc vào hệ điều hành.
+nếu dùng lệnh pip nó sẽ download thư viện theo hệ điều hành
+lambda dùng linux nên nếu chạy lệnh pip trên windows sẽ bị lỗi
+do đó phải chạy lệnh pip trên linux
+nguyên nhân sâu xa: python có 2 loại libraries:
+- python code: cái này là true cross-platform
+- thư viện được viết bằng C sau đó python gọi để chạy: cái này phụ thuộc hệ điều hành
+không thể dùng WSL vì nó cần bật hyper-V mà android emulator lại cần tắt nó, nên install Oracle VirtualBox -> ubuntu.
+
+4. đảm bảo version python trên ubuntu phải giống version python trên lambda. nếu không sẽ bị lỗi:
+"Unable to import module 'lambda_function': No module named '_cffi_backend'"

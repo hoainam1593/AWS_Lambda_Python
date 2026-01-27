@@ -1,5 +1,9 @@
 
 # require library: pip install requests firebase-admin google-cloud-firestore -t ./package
+
+# on ubuntu, must specify python version in lambda: 
+# python3.14 -m pip install requests firebase-admin google-cloud-firestore -t ./package
+
 # filename: lambda_function.py
 
 import json

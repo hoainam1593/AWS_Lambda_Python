@@ -1,4 +1,8 @@
 # require library: pip install google-auth google-auth-oauthlib google-api-python-client firebase-admin google-cloud-firestore -t ./package
+
+# on ubuntu, must specify python version in lambda: 
+# python3.14 -m pip install google-auth google-auth-oauthlib google-api-python-client firebase-admin google-cloud-firestore -t ./package
+
 # filename: lambda_function.py
 
 import os
