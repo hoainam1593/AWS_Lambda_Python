@@ -153,7 +153,14 @@ def validateGooglePlayReceipt_consumable(service, packageName, productId, purcha
         }
     
 def lambda_handler(event, context):
-    params = event.get('queryStringParameters')
+
+    # if invoked by HTTP request, parameters are in event['queryStringParameters']
+    # if invoked in lambda test, parameters are in event
+    if 'queryStringParameters' in event and event['queryStringParameters'] is not None:
+        params = event['queryStringParameters']
+    else:
+        params = event
+
     productId = params.get('productId')
     purchaseToken = params.get('purchaseToken')
     isSubscription = params.get('isSubscription')

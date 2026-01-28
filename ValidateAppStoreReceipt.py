@@ -110,7 +110,13 @@ def lambda_handler(event, context):
     # %    ->    %25
     # ?    ->    %3F
 
-    params = event.get('queryStringParameters')
+    # if invoked by HTTP request, parameters are in event['queryStringParameters']
+    # if invoked in lambda test, parameters are in event
+    if 'queryStringParameters' in event and event['queryStringParameters'] is not None:
+        params = event['queryStringParameters']
+    else:
+        params = event
+    
     payload = params.get('payload')
     transactionId = params.get('transactionId')
     productId = params.get('productId')
