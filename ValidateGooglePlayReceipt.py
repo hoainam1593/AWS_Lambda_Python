@@ -163,7 +163,7 @@ def lambda_handler(event, context):
 
     productId = params.get('productId')
     purchaseToken = params.get('purchaseToken')
-    isSubscription = params.get('isSubscription')
+    isSubscription = params.get('isSubscription').lower() == 'true'
     orderNumber = params.get('orderNumber')
     price = params.get('price')
     currency = params.get('currency')
@@ -181,7 +181,7 @@ def lambda_handler(event, context):
 
 #--------------------------- testing -----------------------------    
 
-token = "kgdmilkldhihkkeklkfechhe.AO-J1OwMDEHnIp5y-Mv9xgWyr6DN65wxO5SUWUKwcCgiBJIp134oYy8evjHzLZ3xzeyW4P78TXX1pnz_fCij4vd98ds_RS38Ug"
+token = "_boimmabiloajnlfakpgppfcb.AO-J1OzhDSc9JYfBrCcqRXi9OPviKe7Gve6cYqhAaH--C1VVeI3nVDTCw59YkOwSeOGiRs28brhj-G0b_V7DgJZShODDYHoJEA"
 serviceAccountGooglePlay = 'D:/merge-cat-town-49d98-0d0703482d92.json'
 serviceAccountFirebase = 'D:/merge-cat-town-49d98-firebase-adminsdk-fbsvc-88de428f72.json'
 orderNumber = "order_0001"
