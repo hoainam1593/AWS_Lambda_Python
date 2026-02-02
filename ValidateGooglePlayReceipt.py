@@ -181,12 +181,12 @@ def lambda_handler(event, context):
 
 #--------------------------- testing -----------------------------    
 
-token = "_boimmabiloajnlfakpgppfcb.AO-J1OzhDSc9JYfBrCcqRXi9OPviKe7Gve6cYqhAaH--C1VVeI3nVDTCw59YkOwSeOGiRs28brhj-G0b_V7DgJZShODDYHoJEA"
-serviceAccountGooglePlay = 'D:/merge-cat-town-49d98-0d0703482d92.json'
-serviceAccountFirebase = 'D:/merge-cat-town-49d98-firebase-adminsdk-fbsvc-88de428f72.json'
+token = "aldchhockbeneihheeijfilc.AO-J1OyYCD1jAXFl-PXm97o7D22EAlsNm3cqTTDmWBgwtbmGEFyNQtKWLK79HQc9x7urnbdoV5dNsYIkI6aTMKR8O-SWJLZd7w"
+serviceAccountGooglePlay = 'D:/merge-cat-island-42d0ffad38d1.json'
+serviceAccountFirebase = 'D:/merge-cat-island-firebase-adminsdk-fbsvc-ad251bac39.json'
 orderNumber = "order_0001"
 price = 0
 currency = "USD"
 userId = 'user_0001'
-result = validateGooglePlayReceipt("com.mobirix.mgct", "shop_gem_0002", token, False, serviceAccountGooglePlay, serviceAccountFirebase, True, orderNumber, price, currency, userId)
+result = validateGooglePlayReceipt("com.mobirix.mgci", "shop_gem_0002", token, False, serviceAccountGooglePlay, serviceAccountFirebase, True, orderNumber, price, currency, userId)
 print(result)
