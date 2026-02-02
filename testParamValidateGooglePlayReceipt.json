@@ -1,7 +1,7 @@
 {
   "productId": "shop_gem_0002",
   "purchaseToken": "boimmabiloajnlfakpgppfcb.AO-J1OzhDSc9JYfBrCcqRXi9OPviKe7Gve6cYqhAaH--C1VVeI3nVDTCw59YkOwSeOGiRs28brhj-G0b_V7DgJZShODDYHoJEA",
-  "isSubscription": false,
+  "isSubscription": "false",
   "orderNumber": "hhfsdf78",
   "price": 67000,
   "currency": "VND",
